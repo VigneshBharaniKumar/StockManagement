@@ -9,7 +9,7 @@ import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "products")
-public class Products {
+public class Product {
 
     @Id   
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,10 @@ public class Products {
     private int in_stock;
     private boolean active;
 
-    public Products() {
+    public Product() {
     }
 
-    public Products(String name, String category, String description, float selling_price, int in_stock,
+    public Product(String name, String category, String description, float selling_price, int in_stock,
             boolean active) {
         this.name = name;
         this.category = category;
@@ -70,7 +70,7 @@ public class Products {
     public void setIn_stock(int in_stock) {
         this.in_stock = in_stock;
     }
-    public boolean isActive() {
+    public boolean getActive() {
         return active;
     }
     public void setActive(boolean active) {
