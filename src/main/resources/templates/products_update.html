@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-xl bg-body-tertiary">
+    <nav class="navbar fixed-top navbar-expand-xl bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Stock Management</a>
         
@@ -38,11 +38,11 @@
         </div>
     </nav>
     
-    <div class="container">
+    <div class="container-fluid d-flex justify-content-center mt-5">
+    
+        <div class="container-xxl shadow p-3 mb-5 bg-body rounded m-3">
 
-        <div class="d-flex justify-content-center card m-3">
-
-            <h1 class="m-3"> Add Product </h1>
+            <h1 class="m-3"> Update Product </h1>
 
             <form method="post" th:action="@{save}" th:object="${product}" >
 
