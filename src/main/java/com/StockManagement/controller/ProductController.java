@@ -23,11 +23,6 @@ public class ProductController {
     @Autowired
     private ProductService service;
     
-    @GetMapping("/")
-    public String home() {
-        return "home.html";
-    }
-
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product){
         return service.saveProduct(product);
