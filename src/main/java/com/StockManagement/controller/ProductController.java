@@ -1,66 +1,61 @@
 package com.StockManagement.controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.StockManagement.model.Product;
 import com.StockManagement.service.ProductService;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-
-@RestController
+@Controller
+@RequestMapping("/products")
 public class ProductController {
-    
+
     @Autowired
     private ProductService service;
+
+    @GetMapping("")
+    public String listProducts(Model model){
+        model.addAttribute("listProducts", service.getProducts());
+        return "products_list.html";
+    }
+
+    @GetMapping("/add")
+    public String addProduct(Model model){
+        Product product = new Product();
+        model.addAttribute("product", product);
+        return "products_add.html";
+    }
+
+    @PostMapping("/save")
+    public String saveProduct(@ModelAttribute("product") Product product){
+        product.setActive(true);
+        service.saveProduct(product);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateProduct(@PathVariable(value = "id") long id, Model model){
+        Product product = service.getProductById(id);
+        model.addAttribute("product", product);
+        return "products_update.html";
+    }
+
+    @PostMapping("/update/save")
+    public String saveUpdateProduct(@ModelAttribute("product") Product product){
+        service.updateProduct(product);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable(value = "id") long id){
+        service.deleteProduct(id);
+        return "redirect:/products";
+    }
     
-    @GetMapping("/")
-    public String home() {
-        return "home.html";
-    }
-
-    @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product){
-        return service.saveProduct(product);
-    }
-
-    @PostMapping("/addProducts")
-    public List<Product> addProducts(@RequestBody List<Product> products){
-        return service.saveProducts(products);
-    }
-
-    @GetMapping("/products")
-    public List<Product> getProducts(){
-        return service.getProducts();
-    }
-
-    @GetMapping("/product/{id}")
-    public Product getProductById(@PathVariable Long id){
-        return service.getProductById(id);
-    }
-
-    @GetMapping("/product/name/{name}")
-    public List<Product> getProductByName(@PathVariable String name){
-        return service.getProductByName(name);
-    }
-
-    @PutMapping("/updateProduct")
-    public Product updateProduct(@RequestBody Product product){
-        return service.updateProduct(product);
-    }
-
-    @DeleteMapping("/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable Long id){
-        return service.deleteProduct(id);
-    }
-
 }
