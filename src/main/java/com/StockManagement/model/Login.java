@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-// import jakarta.persistence.Column;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name="login")
@@ -15,10 +15,10 @@ public class Login {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    // @Column(nullable = false, unique = true, length = 25)
+    @Column(nullable = false, unique = true, length = 25)
     private String username;
 
-    // @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String password;
 
     

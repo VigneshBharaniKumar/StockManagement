@@ -22,8 +22,6 @@ public class LoginService {
     }
     
     public boolean isUserLoggedIn() {      
-        System.out.println(httpSession.getAttribute("username"));
-        System.out.println(httpSession.getAttribute("password"));
         return httpSession.getAttribute("username") != null && httpSession.getAttribute("password") != null;
     }
     
