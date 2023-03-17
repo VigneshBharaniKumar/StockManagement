@@ -1,6 +1,7 @@
 package com.StockManagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.StockManagement.model.Product;
 import com.StockManagement.service.ProductService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -27,7 +30,20 @@ public class ProductController {
     
     @GetMapping("")
     public String listProducts(Model model){
-        model.addAttribute("listProducts", service.getProducts());
+//        model.addAttribute("listProducts", service.getProducts());
+//        return "products_list.html";
+        return findPaginated(1, model);
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 15;
+        Page<Product> page = service.findPaginated(pageNo, pageSize);
+        List<Product> listProducts = page.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listProducts", listProducts);
         return "products_list.html";
     }
 
