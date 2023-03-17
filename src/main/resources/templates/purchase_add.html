@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title>Add Purchase</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
@@ -25,11 +25,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/products">Products</a>
+                        <a class="nav-link" aria-current="page" href="/products">Products</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/purchase">Purchase</a>
+                        <a class="nav-link active" aria-current="page" href="/purchase">Purchase</a>
                     </li>
                 
                 </ul>
@@ -46,13 +46,13 @@
     
         <div class="container-xxl shadow p-3 mb-5 bg-body rounded m-3">
 
-            <h1 class="m-3"> Add Product </h1>
+            <h1 class="m-3"> Add Purchase </h1>
 
             <form method="post" th:action="@{save}" th:object="${purchasedItem}" >
 
                 <div class="form-group m-3">
                     <label for="productName">Product Name</label>
-                    <input type="text" class="form-control" th:field="*{product_name}" id="productName" placeholder="Enter Product Name">
+                    <input type="text" class="form-control" th:field="*{productName}" id="productName" placeholder="Enter Product Name">
                 </div>
 
                 <div class="form-group m-3">
@@ -67,7 +67,7 @@
 
                 <div class="form-group m-3">
                     <label for="date">Date</label>
-                    <input type="date" class="form-control" th:field="*{purchase_date}" id="date" placeholder="Select Purchase Date">
+                    <input type="date" class="form-control" th:field="*{purchaseDate}" id="date" placeholder="Select Purchase Date">
                 </div>
 
                 <div class="form-group m-3">
@@ -77,12 +77,12 @@
 
                 <div class="form-group m-3">
                     <label for="purchaseAmount">Purchase Amount</label>
-                    <input type="number" class="form-control" th:field="*{purchase_amount}" id="purchaseAmount" placeholder="Enter Purchase Amount">
+                    <input type="number" class="form-control" th:field="*{purchaseAmount}" id="purchaseAmount" placeholder="Enter Purchase Amount">
                 </div>
 
                 <div class="form-group m-3">
                     <label for="purchasePrice">Purchase Price</label>
-                    <input type="number" class="form-control" th:field="*{purchase_price}" id="purchasePrice" placeholder="Enter Purchase Price">
+                    <input type="number" class="form-control" th:field="*{purchasePrice}" id="purchasePrice" placeholder="Enter Purchase Price">
                 </div>
 
                 <button type="submit" class="btn btn-primary m-3">Add Product</button>

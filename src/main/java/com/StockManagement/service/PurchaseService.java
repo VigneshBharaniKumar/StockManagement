@@ -3,6 +3,9 @@ package com.StockManagement.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.StockManagement.model.Purchase;
@@ -31,7 +34,7 @@ public class PurchaseService {
     }
 
     public List<Purchase> getPurchasedItemByName(String name){
-        return repository.findByName(name);
+        return repository.findByProductName(name);
     }
 
     public String deletePurchasedItem(Long id){
@@ -39,15 +42,20 @@ public class PurchaseService {
         return "Product " + id + " deleted successfully"; 
     }
 
-    public Purchase updateProduct(Purchase purchasedItem){
+    public Purchase updatePurchasedItem(Purchase purchasedItem){
         Purchase purchasedProduct = repository.findById(purchasedItem.getId()).orElse(null);
-        purchasedProduct.setProduct_name(purchasedItem.getProduct_name());
+        purchasedProduct.setProductName(purchasedItem.getProductName());
         purchasedProduct.setCategory(purchasedItem.getCategory());
         purchasedProduct.setQuantity(purchasedItem.getQuantity());
-        purchasedProduct.setPurchase_date(purchasedItem.getPurchase_date());
+        purchasedProduct.setPurchaseDate(purchasedItem.getPurchaseDate());
         purchasedProduct.setSeller(purchasedItem.getSeller());
-        purchasedProduct.setPurchase_amount(purchasedItem.getPurchase_amount());
-        purchasedProduct.setPurchase_price(purchasedItem.getPurchase_price());
+        purchasedProduct.setPurchaseAmount(purchasedItem.getPurchaseAmount());
+        purchasedProduct.setPurchasePrice(purchasedItem.getPurchasePrice());
         return repository.save(purchasedProduct);
     }  
+
+    public Page<Purchase> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.repository.findAll(pageable);
+    }
 }

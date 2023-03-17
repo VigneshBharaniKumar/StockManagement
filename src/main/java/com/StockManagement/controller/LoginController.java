@@ -35,8 +35,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLogin(Model model) {
-        // model.addAttribute("user", new Login());
-        return "login.html";
+        return "login";
     }
 
     @PostMapping("/login")
@@ -47,7 +46,7 @@ public class LoginController {
             loginService.setSession(login.getUsername(), login.getPassword());
             return "redirect:/home";
         } else {
-            model.addAttribute("error", "Invalid username or password.");
+            model.addAttribute("error", true);
             return "redirect:/";
         }
     }

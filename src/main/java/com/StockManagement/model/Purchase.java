@@ -18,33 +18,33 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private Long product_id;
+    private Long productId;
     @Column(nullable = false, length = 25)
-    private String product_name;
+    private String productName;
     @Column(nullable = false)
-    private Date purchase_date;
+    private Date purchaseDate;
     private String category;
     @Column(nullable = false)
     private int quantity;
     private String seller;
     @Column(nullable = false)
-    private int purchase_amount;
+    private int purchaseAmount;
     @Column(nullable = false)
-    private int purchase_price;
+    private int purchasePrice;
 
     public Purchase() {}
 
-    public Purchase(Long id, Long product_id, String product_name, Date purchase_date, String category, int quantity,
-            String seller, int purchase_amount, int purchase_price) {
+    public Purchase(Long id, Long productId, String productName, Date purchaseDate, String category, int quantity,
+            String seller, int purchaseAmount, int purchasePrice) {
         this.id = id;
-        this.product_id = product_id;
-        this.product_name = product_name;
-        this.purchase_date = purchase_date;
+        this.productId = productId;
+        this.productName = productName;
+        this.purchaseDate = purchaseDate;
         this.category = category;
         this.quantity = quantity;
         this.seller = seller;
-        this.purchase_amount = purchase_amount;
-        this.purchase_price = purchase_price;
+        this.purchaseAmount = purchaseAmount;
+        this.purchasePrice = purchasePrice;
     }
 
     public Long getId() {
@@ -55,28 +55,28 @@ public class Purchase {
         this.id = id;
     }
 
-    public Long getProduct_id() {
-        return product_id;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public Date getPurchase_date() {
-        return purchase_date;
+    public Date getPurchaseDate() {
+        return purchaseDate;
     }
 
-    public void setPurchase_date(Date purchase_date) {
-        this.purchase_date = purchase_date;
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 
     public String getCategory() {
@@ -103,20 +103,20 @@ public class Purchase {
         this.seller = seller;
     }
 
-    public int getPurchase_amount() {
-        return purchase_amount;
+    public int getPurchaseAmount() {
+        return purchaseAmount;
     }
 
-    public void setPurchase_amount(int purchase_amount) {
-        this.purchase_amount = purchase_amount;
+    public void setPurchaseAmount(int purchaseAmount) {
+        this.purchaseAmount = purchaseAmount;
     }
 
-    public int getPurchase_price() {
-        return purchase_price;
+    public int getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setPurchase_price(int purchase_price) {
-        this.purchase_price = purchase_price;
+    public void setPurchasePrice(int purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     
