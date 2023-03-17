@@ -37,7 +37,7 @@ public class PurchaseController {
 
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-        int pageSize = 2;
+        int pageSize = 15;
         Page<Purchase> page = purchaseService.findPaginated(pageNo, pageSize);
         List<Purchase> listProducts = page.getContent();
         model.addAttribute("currentPage", pageNo);
