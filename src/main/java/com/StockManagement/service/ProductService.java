@@ -13,7 +13,6 @@ import com.StockManagement.repository.ProductRepository;
 
 @Service
 public class ProductService {
-
     @Autowired
     private ProductRepository repository;
 
@@ -53,6 +52,11 @@ public class ProductService {
     public Page<Product> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.repository.findAll(pageable);
+    }
+
+    public Page<Product> search(String keyword, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return repository.search(keyword, pageable);
     }
 
 }
