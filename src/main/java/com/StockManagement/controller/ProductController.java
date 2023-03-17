@@ -2,6 +2,7 @@ package com.StockManagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,15 +32,28 @@ public class ProductController {
 
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-        int pageSize = 15;
-        Page<Product> page = service.findPaginated(pageNo, pageSize);
+        Page<Product> page = service.findPaginated(pageNo, 15);
         List<Product> listProducts = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listProducts", listProducts);
+        model.addAttribute("keyword", "");
         return "products_list.html";
     }
+
+    @GetMapping("/search/page/{pageNum}")
+    public String searchByPage(String keyword, Model model, @PathVariable(name = "pageNum") int pageNum) {
+        Page<Product> result = service.search(keyword, pageNum, 15);
+        List<Product> listProducts = result.getContent();
+        model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("totalItems", result.getTotalElements());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("listProducts", listProducts);
+        model.addAttribute("keyword", keyword);
+        return "products_list.html";
+    }
+
 
     @GetMapping("/add")
     public String addProduct(Model model){
@@ -73,5 +87,11 @@ public class ProductController {
         service.deleteProduct(id);
         return "redirect:/products";
     }
-    
+
+    @GetMapping("/search")
+    public String search(@Param("keyword") String keyword, Model model) {
+        System.out.println(keyword);
+        return searchByPage(keyword, model, 1);
+    }
+
 }

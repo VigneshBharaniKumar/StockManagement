@@ -57,14 +57,14 @@
                             </div>
                             <div class="col">
                                 <div class="form-group m-3">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="txtSearchProductName" placeholder="Search by Name">
-                                        <span class="input-group-append">
-                                            <button class="btn btn-outline-secondary border-left-0 border" type="button">
-                                                  <i class="bi bi-search"></i>
+                                    <form class="form-inline" th:action="@{products/search}" method="get">
+                                        <div class="input-group">
+                                            <input type="search" name="keyword" th:value="${keyword}" class="form-control" id="txtSearchProductName" placeholder="Search by Name">
+                                            <button class="btn btn-outline-secondary border-left-0 border" type="submit">
+                                                <i class="bi bi-search"></i>
                                             </button>
-                                          </span>
-                                    </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
