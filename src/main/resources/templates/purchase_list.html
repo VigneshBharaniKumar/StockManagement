@@ -50,18 +50,18 @@
                 <div class="row">
 
                     <div class="col d-flex align-items-center">
-                        <h1 style="margin-bottom: 0;"> Products List </h1>
+                        <h1 style="margin-bottom: 0;"> Purchase List </h1>
                     </div>
 
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <a class="btn btn-primary m-3" href="products/add" role="button">Add Product</a>
+                                <a class="btn btn-primary m-3" href="purchase/add" role="button">Add Product</a>
                             </div>
                             <div class="col">
                                 <div class="form-group m-3">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="txtSearchProductName" placeholder="Search by Name">
+                                        <input type="text" class="form-control" id="txtSearchProductName" placeholder="Search by Product Name">
                                         <span class="input-group-append">
                                             <button class="btn btn-outline-secondary border-left-0 border" type="button">
                                                   <i class="bi bi-search"></i>
@@ -82,12 +82,13 @@
                         <tr>
 
                             <th> Id </th>
-                            <th> Name </th>
+                            <th> Product Name </th>
                             <th> Category </th>
-                            <th> Description </th>
-                            <th> Selling Price </th>
-                            <th> In-Stock </th>
-                            <th> Active </th>
+                            <th> Quantity </th>
+                            <th> Date </th>
+                            <th> Seller </th>
+                            <th> Purchase Amount </th>
+                            <th> Purchase Price </th>
                             <th> Actions </th>
 
                         </tr>
@@ -96,14 +97,16 @@
 
                     <tbody>
 
-                        <tr th:each = "product : ${listProducts}">
+                        <tr th:each = "product : ${listPurchasedItem}">
 
                             <td th:text = "${product.id}"></td>
                             <td th:text = "${product.name}"></td>
                             <td th:text = "${product.category}"></td>
-                            <td th:text = "${product.description}"></td>
-                            <td th:text = "${product.selling_price}"></td>
-                            <td th:text = "${product.in_stock}"></td>
+                            <td th:text = "${product.quantity}"></td>
+                            <td th:text = "${product.date}"></td>
+                            <td th:text = "${product.seller}"></td>
+                            <td th:text = "${product.purchase_amount}"></td>
+                            <td th:text = "${product.purchase_price}"></td>
                             <td th:text = "${product.active}"></td>
 
                             <td>

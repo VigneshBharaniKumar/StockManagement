@@ -22,15 +22,15 @@ public class LoginController {
     @GetMapping("/")
     public String showLoginForm(Model model) {
         if (loginService.isUserLoggedIn()) {
-            return "index.html";
+            return "home.html";
         }
         model.addAttribute("user", new Login());
         return "login.html";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/home")
     public String showIndex() {
-        return "index.html";
+        return "home.html";
     }
 
     @GetMapping("/login")
@@ -45,7 +45,7 @@ public class LoginController {
 
         if (isAuthenticated) {
             loginService.setSession(login.getUsername(), login.getPassword());
-            return "redirect:/index";
+            return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid username or password.");
             return "redirect:/";
