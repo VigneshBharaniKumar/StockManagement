@@ -48,16 +48,25 @@ public class ProductController {
         return "products_list.html";
     }
 
-    @GetMapping("/search/page/{pageNum}")
-    public String searchByPage(String keyword, Model model, @PathVariable(name = "pageNum") int pageNum) {
-        Page<Product> result = service.search(keyword, pageNum, 15);
-        List<Product> listProducts = result.getContent();
-        model.addAttribute("totalPages", result.getTotalPages());
-        model.addAttribute("totalItems", result.getTotalElements());
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("listProducts", listProducts);
-        model.addAttribute("keyword", keyword);
-        return "products_list.html";
+    @GetMapping("/search")
+    public String search(@Param("keyword") String keyword, Model model) {
+        return searchByPage(model, keyword , 1);
+    }
+
+    @GetMapping("/search/{keyword}/page/{pageNum}")
+    public String searchByPage(Model model, @PathVariable(name = "keyword") String keyword, @PathVariable(name = "pageNum") int pageNum) {
+        if (keyword.isEmpty()) {
+            return "redirect:/products";
+        } else {
+            Page<Product> result = service.search(keyword, pageNum, 15);
+            List<Product> listProducts = result.getContent();
+            model.addAttribute("totalPages", result.getTotalPages());
+            model.addAttribute("totalItems", result.getTotalElements());
+            model.addAttribute("currentPage", pageNum);
+            model.addAttribute("listProducts", listProducts);
+            model.addAttribute("keyword", keyword);
+            return "products_list.html";
+        }
     }
 
 
@@ -92,12 +101,6 @@ public class ProductController {
     public String deleteProduct(@PathVariable(value = "id") long id){
         service.deleteProduct(id);
         return "redirect:/products";
-    }
-
-    @GetMapping("/search")
-    public String search(@Param("keyword") String keyword, Model model) {
-        System.out.println(keyword);
-        return searchByPage(keyword, model, 1);
     }
 
 }
