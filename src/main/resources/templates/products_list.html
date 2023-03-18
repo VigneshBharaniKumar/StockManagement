@@ -51,17 +51,22 @@
                 <div class="row">
 
                     <div class="col d-flex align-items-center">
-                        <h3 style="margin-bottom: 0;"> Products List </h3>
+                        <div th:if = "${keyword == ''}">
+                            <h3 style="margin-bottom: 0;"> Products List </h3>
+                        </div>
+                        <div th:unless = "${keyword == ''}">
+                            <h3 style="margin-bottom: 0;"> Search result for '[[${keyword}]]' </h3>
+                        </div>
                     </div>
 
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <a class="btn btn-primary m-3" href="products/add" role="button">Add Product</a>
+                                <a class="btn btn-primary m-3" th:href="@{/products/add}" role="button">Add Product</a>
                             </div>
                             <div class="col">
                                 <div class="form-group m-3">
-                                    <form class="form-inline" th:action="@{products/search}" method="get">
+                                    <form class="form-inline" th:action="@{/products/search}" method="get">
                                         <div class="input-group">
                                             <input type="search" name="keyword" th:value="${keyword}" class="form-control" id="txtSearchProductName" placeholder="Search by Name">
                                             <button class="btn btn-outline-secondary border-left-0 border" type="submit">
