@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -73,7 +73,7 @@
                         <input class="form-control" type="password" id="password" name="password" th:field="*{password}" required />
                     </div>
 
-                    <div th:if="${error}">
+                    <div th:if="${error == 'true'}">
                         <p style="color: red;">Invalid username or password.</p>
                     </div>
 

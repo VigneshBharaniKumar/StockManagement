@@ -38,7 +38,7 @@ public class ProductController {
 
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-        Page<Product> page = service.findPaginated(pageNo, 15);
+        Page<Product> page = service.findPaginated(pageNo, 10);
         List<Product> listProducts = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());

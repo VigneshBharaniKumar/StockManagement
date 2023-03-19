@@ -8,134 +8,120 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" th:href="@{/css/products_ist.css}"/>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/components/modal/"><link rel="preconnect" href="https://AK7KMZKZHQ-dsn.algolia.net" crossorigin>
 </head>
-<body class="vw-100 vh-100">
+<body class="vh-90" style="max-height:90vh">
 
-    <nav class="navbar fixed-top navbar-expand-xl bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Stock Management</a>
-        
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/products">Products</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/purchase">Purchase</a>
-                    </li>
-                
-                </ul>
-            </div>
-
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" class="btn btn-primary" value="Logout" />
-            </form>
-
-        </div>
-    </nav>
+    <!--NAV BAR-->
+    <div th:replace="fragments/nav :: navbar"></div>
 
     <div class="container-fluid d-flex justify-content-center mt-5">
-    
-        <div class="container-fluid shadow p-3 mb-5 bg-body rounded m-3">
-        
-                <div class="row">
 
-                    <div class="col d-flex align-items-center">
-                        <div th:if = "${keyword == ''}">
-                            <h3 style="margin-bottom: 0;"> Products List </h3>
+        <div class="container-fluid shadow p-3 mb-3 bg-body rounded my-3 vh-90">
+
+            <!--TITLE-ROW-->
+            <div id="title_row" class="row justify-content-between align-items-center">
+                <!--TITLE-->
+                <div class="col-md-auto d-flex align-items-center">
+                    <div th:if = "${keyword == ''}">
+                        <h3 style="margin-bottom: 0;" class="text-primary"> Products List </h3>
+                    </div>
+                    <div th:unless = "${keyword == ''}">
+                        <h3 style="margin-bottom: 0;" class="text-danger"> Search result for '[[${keyword}]]' </h3>
+                    </div>
+                </div>
+                <!--ADD PRODUCT AND SEARCH-->
+                <div class="col-md-auto align-self-end">
+                    <div class="row">
+                        <!--ADD PRODUCT-->
+                        <div class="col-md-auto">
+                            <a class="btn btn-primary m-3" th:href="@{/products/add}" role="button">Add Product</a>
                         </div>
-                        <div th:unless = "${keyword == ''}">
-                            <h3 style="margin-bottom: 0;"> Search result for '[[${keyword}]]' </h3>
+                        <!--SEARCH-->
+                        <div class="col-md-auto align-self-end">
+                            <div class="form-group m-3">
+                                <form class="form-inline" th:action="@{/products/search}" method="get">
+                                    <div class="input-group">
+                                        <input type="search" name="keyword" th:value="${keyword}" class="form-control" id="txtSearchProductName" placeholder="Search by Name">
+                                        <button class="btn btn-outline-secondary border-left-0 border" type="submit">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <a class="btn btn-primary m-3" th:href="@{/products/add}" role="button">Add Product</a>
+            </div>
+
+            <!--BORDER-->
+            <hr id="border_row" class=" row border border-secondary border-1 opacity-20" style="padding: 0; margin: 0;">
+
+            <div id="table_row" class="row scrollable" style="max-height:70vh; overflow-y:scroll;">
+                <!--TABLE CARD-->
+                <div class="container-fluid" th:each = "product : ${listProducts}">
+
+                    <div class="container-fluid shadow px-3 py-1 bg-body rounded my-1">
+                        <div class="row mt-1">
+
+                            <div class="col-4">
+                                <div>
+                                    <h5>[[${product.name}]]<h6><span class="badge bg-secondary">Id: [[${product.id}]]</span></h6></h5>
+                                </div>
                             </div>
-                            <div class="col">
-                                <div class="form-group m-3">
-                                    <form class="form-inline" th:action="@{/products/search}" method="get">
-                                        <div class="input-group">
-                                            <input type="search" name="keyword" th:value="${keyword}" class="form-control" id="txtSearchProductName" placeholder="Search by Name">
-                                            <button class="btn btn-outline-secondary border-left-0 border" type="submit">
-                                                <i class="bi bi-search"></i>
-                                            </button>
-                                        </div>
-                                    </form>
+                            <div class="col-lg-4">
+                                <p>Category : [[${product.category}]]</p>
+                                <p>Description : [[${product.description}]]</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Selling Price : [[${product.selling_price}]]</p>
+                                <p>In-Stock : [[${product.in_stock}]]</p>
+                            </div>
+                            <div class="col col-lg-1 align-middle">
+                                <div class="row">
+                                    <div class="col">
+                                        <a type="button" class="btn btn-xs btn-link text-decoration-none" th:href="@{/products/update/{id}(id=${product.id})}" style="font-size:20px; color:black; padding: 0;">
+                                            <span class="bi bi-pencil-fill"></span>&nbsp;
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a type="button" class="btn btn-xs btn-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteConfirm" style="font-size:20px; color:red; padding: 0;">
+                                            <span class="bi bi-trash3-fill"></span>&nbsp;
+                                            <!-- Delete Modal -->
+                                            <div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="deleteConfirm" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Warning!</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure to delete?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                            <a type="button" class="btn btn-primary btn-danger" th:href="@{products/delete/{id}(id=${product.id})}">Yes</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-            <div class="table-responsive">
-
-                <table class="table-responsive table table-striped table-hover">
-                    
-                    <thead>
-
-                        <tr>
-
-                            <th> Id </th>
-                            <th> Name </th>
-                            <th> Category </th>
-                            <th> Description </th>
-                            <th> Selling Price </th>
-                            <th> In-Stock </th>
-                            <th> Active </th>
-                            <th class="col-md-1"> Actions </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        <tr th:each = "product : ${listProducts}">
-
-                            <td th:text = "${product.id}"></td>
-                            <td th:text = "${product.name}"></td>
-                            <td th:text = "${product.category}"></td>
-                            <td th:text = "${product.description}"></td>
-                            <td th:text = "${product.selling_price}"></td>
-                            <td th:text = "${product.in_stock}"></td>
-                            <td th:text = "${product.active}"></td>
-
-                            <td>
-
-                                <a th:href="@{products/update/{id}(id=${product.id})}" class="text-decoration-none" style="color:black;">
-                                    <i class="bi bi-pencil-fill px-md-2"></i>
-                                </a>
-                                <a href="#" th:href="@{products/delete/{id}(id=${product.id})}" class="text-decoration-none" style="color:red;">
-                                    <i class="bi bi-trash3-fill px-md-2"></i>
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
             </div>
 
-            <div th:if = "${keyword == ''}">
+            <!--BORDER-->
+            <hr id="border_bottom_row" class="row border border-secondary border-1 opacity-20" style="padding: 0; margin: 0;">
+
+            <!--NAVIGATION WITHOUT SEARCH -->
+            <div id="navigation_row" class="row" th:if = "${keyword == ''}">
                 <div th:if = "${totalPages > 1}">
-                    <div class="row">
+                    <div class="row mt-1">
                         <div class="col-sm-2 text-secondary">
                             Total Products : [[${totalItems}]]
                         </div>
@@ -155,10 +141,11 @@
                     </div>
                 </div>
             </div>
-            <div th:unless = "${keyword == ''}">
+            <!--NAVIGATION WITH SEARCH-->
+            <div id="search_navigation_row" th:unless = "${keyword == ''}">
                 <div th:if = "${totalPages > 1}">
-                    <div class="row">
-                        <div class="col-sm-2 text-secondary">
+                    <div class="row mt-1">
+                        <div class="col-sm-2 mt-1 text-secondary">
                             Total Products : [[${totalItems}]]
                         </div>
                         <div class="col-sm-8">
@@ -181,7 +168,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
