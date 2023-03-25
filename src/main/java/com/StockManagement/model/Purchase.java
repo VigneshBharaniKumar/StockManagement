@@ -7,8 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "purchase")
@@ -31,11 +33,17 @@ public class Purchase {
     private int purchaseAmount;
     @Column(nullable = false)
     private int purchasePrice;
+    @CreationTimestamp
+    private Timestamp timestamp;
 
     public Purchase() {}
 
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
     public Purchase(Long id, Long productId, String productName, Date purchaseDate, String category, int quantity,
-            String seller, int purchaseAmount, int purchasePrice) {
+                    String seller, int purchaseAmount, int purchasePrice) {
         this.id = id;
         this.productId = productId;
         this.productName = productName;
@@ -45,6 +53,10 @@ public class Purchase {
         this.seller = seller;
         this.purchaseAmount = purchaseAmount;
         this.purchasePrice = purchasePrice;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Long getId() {

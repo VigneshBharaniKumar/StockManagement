@@ -25,7 +25,7 @@
 
 <div th:replace="fragments/nav :: navbar"></div>
 
-    <div class="container-fluid d-flex justify-content-center mt-5">
+    <div class="container-fluid d-flex justify-content-center mt-5" style="padding: 0; margin: 0;">
         <div class="container-fluid shadow p-3 mb-5 bg-body rounded m-3">
 <!--        TITLE ROW-->
             <div class="row">
@@ -67,87 +67,120 @@
     
             </div>
 
+            <hr id="border_row" class=" row border border-secondary border-1 opacity-20" style="padding: 0; margin: 0;">
+<!--        TABLE ROW-->
+            <div id="table_row" class="row scrollable" style="max-height:70vh; overflow-y:scroll;">
+                <!--TABLE CARD-->
+                <div class="container-fluid" th:each = "purchase : ${listPurchasedItems}">
 
-    
-            <div class="table-responsive">
-    
-                <table class="table-responsive table table-striped table-hover">
-    
-                    <thead>
-    
-                        <tr>
-                            <th> Id </th>
-                            <th> Product Name </th>
-                            <th> Category </th>
-                            <th> Quantity </th>
-                            <th> Date </th>
-                            <th> Seller </th>
-                            <th> Purchase Amount </th>
-                            <th> Purchase Price </th>
-                            <th class="col-md-1"> Actions </th>
-    
-                        </tr>
-    
-                    </thead>
-    
-                    <tbody>
-    
-                        <tr th:each = "purchase : ${listPurchasedItems}">
+                    <div id="table_card" class="container-fluid shadow px-3 py-1 bg-body rounded my-1">
+                        <div class="row mt-1">
 
-                            <td th:text = "${purchase.id}"></td>
-                            <td th:text = "${purchase.productName}"></td>
-                            <td th:text = "${purchase.category}"></td>
-                            <td th:text = "${purchase.quantity}"></td>
-                            <td th:text = "${purchase.purchaseDate}"></td>
-                            <td th:text = "${purchase.seller}"></td>
-                            <td th:text = "${purchase.purchaseAmount}"></td>
-                            <td th:text = "${purchase.purchasePrice}"></td>
-    
-                            <td>    
-                                <a th:href="@{purchase/update/{id}(id=${purchase.id})}" class="text-decoration-none"
-                                    style="color:black;">
-                                    <i class="bi bi-pencil-fill px-md-2"></i>
-                                </a>
-                                <a href="#" th:href="@{purchase/delete/{id}(id=${purchase.id})}" class="text-decoration-none"
-                                    style="color:red;">
-                                    <i class="bi bi-trash3-fill px-md-2"></i>
-                                </a>
-    
-                            </td>
-    
-                        </tr>
-    
-                    </tbody>
-    
-                </table>
-    
-            </div>
-    
-            <div th:if="${totalPages > 1}">
-                <div class="row">
-                    <div class="col-sm-2 text-secondary">
-                        Total purchase : [[${totalItems}]]
-                    </div>
-                    <div class="col-sm-8">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
-                                <li th:if="${currentPage > 1}" class="page-item"><a class="page-link"
-                                        th:href="@{'/purchase/page/' + ${currentPage - 1}}">Previous</a></li>
-                                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                    <li th:if="${currentPage != i}" class="page-item"><a class="page-link"
-                                            th:href="@{'/purchase/page/' + ${i}}">[[${i}]]</a></li>
-                                    <li th:unless="${currentPage != i}" class="page-item disabled"><a
-                                            class="page-link">[[${i}]]</a></li>
-                                </span>
-                                <li th:if="${currentPage < totalPages}" class="page-item"><a class="page-link"
-                                        th:href="@{'/purchase/page/' + ${currentPage + 1}}">Next</a></li>
-                                <li th:if="${currentPage < totalPages}" class="page-item"><a class="page-link"
-                                        th:href="@{'/purchase/page/' + ${totalPages}}">Last</a></li>
-                            </ul>
-                        </nav>
+                            <div class="col-lg-3">
+                                <div>
+                                    <h5>[[${purchase.productName}]]<h6><span class="badge bg-secondary">Purchase Id: [[${purchase.id}]]</span></h6></h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Category : [[${purchase.category}]]</p>
+                                <p>Quantity : [[${purchase.quantity}]]</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Purchase Date : [[${purchase.purchaseDate}]]</p>
+                                <p>Seller : [[${purchase.seller}]]</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>Purchase Amount : [[${purchase.purchaseAmount}]]</p>
+                                <p>Purchase Price : [[${purchase.purchasePrice}]]</p>
+                            </div>
+                            <div class="col col-lg-1 align-middle">
+                                <div class="row">
+                                    <div class="col">
+                                        <a type="button" class="btn btn-xs btn-link text-decoration-none" th:href="@{/purchase/update/{id}(id=${purchase.id})}"  style="font-size:20px; color:black; padding: 0;">
+                                            <span class="bi bi-pencil-fill"></span>&nbsp;
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a type="button" class="btn btn-xs btn-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteConfirm" style="font-size:20px; color:red; padding: 0;">
+                                            <span class="bi bi-trash3-fill"></span>&nbsp;
+                                        </a>
+                                        <!-- Delete Modal -->
+                                        <div class="overlay">
+                                            <div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="deleteConfirm" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Warning!</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure to delete?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                            <a type="button" class="btn btn-primary btn-danger" th:href="@{purchase/delete/{id}(id=${purchase.id})}">Yes</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <hr id="bottom_border_row" class=" row border border-secondary border-1 opacity-20" style="padding: 0; margin: 0;">
+
+            <!--NAVIGATION WITHOUT SEARCH -->
+            <div id="navigation_row" class="row" th:if = "${keyword == NULL}">
+                <div th:if = "${totalPages > 1}">
+                    <div class="row mt-1">
+                        <div class="col-sm-2 text-secondary">
+                            Total Purchase : [[${totalItems}]]
+                        </div>
+                        <div class="col-sm-8">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'/purchase/page/' + ${currentPage - 1}}">Previous</a></li>
+                                    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                        <li th:if = "${currentPage != i}" class="page-item"><a class="page-link" th:href="@{'/purchase/page/' + ${i}}">[[${i}]]</a></li>
+                                        <li th:unless="${currentPage != i}" class="page-item disabled"><a class="page-link">[[${i}]]</a></li>
+                                    </span>
+                                    <li th:if="${currentPage < totalPages}" class="page-item"><a class="page-link" th:href="@{'/purchase/page/' + ${currentPage + 1}}">Next</a></li>
+                                    <li th:if="${currentPage < totalPages}" class="page-item"><a class="page-link" th:href="@{'/purchase/page/' + ${totalPages}}">Last</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--NAVIGATION WITH SEARCH-->
+            <div id="search_navigation_row" th:unless = "${keyword == NULL}">
+                <div th:if = "${totalPages > 1}">
+                    <div class="row mt-1">
+                        <div class="col-sm-2 mt-1 text-secondary">
+                            Total Purchase : [[${totalItems}]]
+                        </div>
+                        <div class="col-sm-8">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'/purchase/search/'+${keyword}+'/page/' + ${currentPage - 1}}">Previous</a></li>
+                                    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                        <li th:if = "${currentPage != i}" class="page-item"><a class="page-link" th:href="@{'/purchase/search/'+${keyword}+'/page/' + ${i}}">[[${i}]]</a></li>
+                                        <li th:unless="${currentPage != i}" class="page-item disabled"><a class="page-link">[[${i}]]</a></li>
+                                    </span>
+                                    <li th:if="${currentPage < totalPages}" class="page-item"><a class="page-link" th:href="@{'/purchase/search/'+${keyword}+'/page/' + ${currentPage + 1}}">Next</a></li>
+                                    <li th:if="${currentPage < totalPages}" class="page-item"><a class="page-link" th:href="@{'/purchase/search/'+${keyword}+'/page/' + ${totalPages}}">Last</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

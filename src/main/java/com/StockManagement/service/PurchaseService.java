@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.StockManagement.model.Purchase;
@@ -41,6 +42,7 @@ public class PurchaseService {
 
     public Purchase updatePurchasedItem(Purchase purchasedItem){
         Purchase purchasedProduct = repository.findById(purchasedItem.getId()).orElse(null);
+        assert purchasedProduct != null;
         purchasedProduct.setProductName(purchasedItem.getProductName());
         purchasedProduct.setCategory(purchasedItem.getCategory());
         purchasedProduct.setQuantity(purchasedItem.getQuantity());
@@ -52,12 +54,12 @@ public class PurchaseService {
     }  
 
     public Page<Purchase> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("purchaseDate").descending());
         return this.repository.findAll(pageable);
     }
 
     public Page<Purchase> search(String keyword, int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("purchase_date").descending());
         return repository.search(keyword, pageable);
     }
 }

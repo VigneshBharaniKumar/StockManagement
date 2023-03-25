@@ -96,7 +96,7 @@
 
                         <div class="form-group m-3">
                             <label for="productName">Product Id</label>
-                            <input type="text" class="form-control" th:field="*{productId}" id="productId" placeholder="Select Product" readonly>
+                            <input type="text" class="form-control" th:field="*{productId}" id="productId" placeholder="Select Product" readonly required>
                         </div>
 
                         <div class="form-group m-3">
@@ -111,12 +111,12 @@
 
                         <div class="form-group m-3">
                             <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" th:field="*{quantity}" id="quantity" placeholder="Enter Product Quantity">
+                            <input type="number" class="form-control" th:field="*{quantity}" id="quantity" placeholder="Enter Product Quantity" required>
                         </div>
 
                         <div class="form-group m-3">
                             <label for="date">Purchase Date</label>
-                            <input type="date" class="form-control" th:field="*{purchaseDate}" id="date" placeholder="Select Purchase Date">
+                            <input type="date" class="form-control" th:field="*{purchaseDate}" id="date" placeholder="Select Purchase Date" required>
                         </div>
 
                         <div class="form-group m-3">
@@ -126,13 +126,13 @@
 
                         <div class="form-group m-3">
                             <label for="purchaseAmount">Purchase Amount</label>
-                            <input type="number" class="form-control" th:field="*{purchaseAmount}" id="purchaseAmount" placeholder="Enter Purchase Amount">
+                            <input type="number" class="form-control" th:field="*{purchaseAmount}" id="purchaseAmount" placeholder="Enter Purchase Amount" required>
                         </div>
 
-                        <div class="form-group m-3">
-                            <label for="purchasePrice">Purchase Price</label>
-                            <input type="number" class="form-control" th:field="*{purchasePrice}" id="purchasePrice" placeholder="Enter Purchase Price">
-                        </div>
+<!--                        <div class="form-group m-3">-->
+<!--                            <label for="purchasePrice">Purchase Price</label>-->
+<!--                            <input type="number" class="form-control" th:field="*{purchasePrice}" id="purchasePrice" placeholder="Enter Purchase Price">-->
+<!--                        </div>-->
 
                         <button type="submit" class="btn btn-primary m-3">Add Purchase</button>
 
@@ -147,7 +147,6 @@
 
     <script>
         function selectProduct(element, id, name, category) {
-<!--            element.style.backgroundColor = "green";-->
             document.getElementById('productId').value = id;
             document.getElementById('productName').value = name;
             document.getElementById('productCategory').value = category;

@@ -97,6 +97,7 @@ public class PurchaseController {
     public String saveProduct(@ModelAttribute("purchasedItem") Purchase purchase){
 //        purchase.setProductId((long) 1);
         System.out.println(purchase.toString());
+        purchase.setPurchasePrice(purchase.getPurchaseAmount()/purchase.getQuantity());
         purchaseService.savePurchasedItem(purchase);
         return "redirect:/purchase";
     }
