@@ -58,7 +58,7 @@ public class ProductController {
         if (keyword.isEmpty()) {
             return "redirect:/products";
         } else {
-            Page<Product> result = service.search(keyword, pageNum, 15);
+            Page<Product> result = service.search(keyword, pageNum, 10);
             List<Product> listProducts = result.getContent();
             model.addAttribute("totalPages", result.getTotalPages());
             model.addAttribute("totalItems", result.getTotalElements());

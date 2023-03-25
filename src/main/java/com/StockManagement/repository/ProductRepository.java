@@ -13,9 +13,9 @@ public interface ProductRepository extends JpaRepository<Product,Long>{
 
     List<Product> findByName(String name);
 
-    @Query(value = "SELECT * FROM products WHERE MATCH(name, category, description) AGAINST (?1)",
+    @Query(value = "SELECT * FROM products WHERE id LIKE %?1% OR name LIKE %?1% OR category LIKE %?1% OR description LIKE %?1%",
             nativeQuery = true,
-            countQuery = "SELECT COUNT(*) FROM products WHERE MATCH(name, category, description) AGAINST (?1)")
+            countQuery = "SELECT COUNT(*) FROM products WHERE id LIKE %?1% OR name LIKE %?1% OR category LIKE %?1% OR description LIKE %?1%")
     public Page<Product> search(String keyword, Pageable pageable);
 
 }

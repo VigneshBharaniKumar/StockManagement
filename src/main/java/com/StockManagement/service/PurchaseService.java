@@ -2,6 +2,7 @@ package com.StockManagement.service;
 
 import java.util.List;
 
+import com.StockManagement.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,10 +34,6 @@ public class PurchaseService {
         return repository.findAll();
     }
 
-    public List<Purchase> getPurchasedItemByName(String name){
-        return repository.findByProductName(name);
-    }
-
     public String deletePurchasedItem(Long id){
         repository.deleteById(id);
         return "Product " + id + " deleted successfully"; 
@@ -57,5 +54,10 @@ public class PurchaseService {
     public Page<Purchase> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.repository.findAll(pageable);
+    }
+
+    public Page<Purchase> search(String keyword, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return repository.search(keyword, pageable);
     }
 }
