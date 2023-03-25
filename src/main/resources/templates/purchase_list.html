@@ -33,10 +33,10 @@
                 <div id="title_row" class="row justify-content-between align-items-center">
                     <!--TITLE-->
                     <div id="title" class="col-md-auto d-flex align-items-center">
-                        <div th:if = "${keyword == ''}">
+                        <div th:if = "${keyword == NULL}">
                             <h3 style="margin-bottom: 0;" class="text-primary"> Purchase List </h3>
                         </div>
-                        <div th:unless = "${keyword == ''}">
+                        <div th:unless = "${keyword == NULL}">
                             <h3 style="margin-bottom: 0;" class="text-danger"> Search result for '[[${keyword}]]' </h3>
                         </div>
                     </div>
