@@ -1,7 +1,9 @@
 package com.StockManagement.controller;
 
+import com.StockManagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ public class PurchaseController {
 
     @Autowired
     private PurchaseService purchaseService;
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/addPurchase")
     public Purchase addPurchase(@RequestBody Purchase purchase){
@@ -51,12 +55,26 @@ public class PurchaseController {
     public String addProduct(Model model){
         Purchase purchase = new Purchase();
         model.addAttribute("purchasedItem", purchase);
+        model.addAttribute("listProducts", productService.getProducts());
+        return "purchase_add.html";
+    }
+
+    @GetMapping("/add/search")
+    public String productSearch(@Param("keyword") String keyword, Model model) {
+        Purchase purchase = new Purchase();
+        model.addAttribute("purchasedItem", purchase);
+        if (keyword.isEmpty()) {
+            return "redirect:/purchase/add";
+        } else {
+            model.addAttribute("listProducts", productService.search(keyword, 1, 100));
+        }
         return "purchase_add.html";
     }
 
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute("purchasedItem") Purchase purchase){
-        purchase.setProductId((long) 1);
+//        purchase.setProductId((long) 1);
+        System.out.println(purchase.toString());
         purchaseService.savePurchasedItem(purchase);
         return "redirect:/purchase";
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +7,22 @@
     <title>Products List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" th:href="@{/css/products_ist.css}"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/components/modal/"><link rel="preconnect" href="https://AK7KMZKZHQ-dsn.algolia.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: 400;
+            max-height: 90vh;
+            margin: 0;
+            padding:0;
+        }
+    </style>
 </head>
-<body class="vh-90" style="max-height:90vh">
+<body>
 
     <!--NAV BAR-->
     <div th:replace="~{fragments/nav :: navbar}"></div>
@@ -22,7 +34,7 @@
             <!--TITLE-ROW-->
             <div id="title_row" class="row justify-content-between align-items-center">
                 <!--TITLE-->
-                <div class="col-md-auto d-flex align-items-center">
+                <div id="title" class="col-md-auto d-flex align-items-center">
                     <div th:if = "${keyword == ''}">
                         <h3 style="margin-bottom: 0;" class="text-primary"> Products List </h3>
                     </div>
@@ -62,7 +74,7 @@
                 <!--TABLE CARD-->
                 <div class="container-fluid" th:each = "product : ${listProducts}">
 
-                    <div class="container-fluid shadow px-3 py-1 bg-body rounded my-1">
+                    <div id="table_card" class="container-fluid shadow px-3 py-1 bg-body rounded my-1">
                         <div class="row mt-1">
 
                             <div class="col-4">
@@ -88,8 +100,10 @@
                                     <div class="col">
                                         <a type="button" class="btn btn-xs btn-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteConfirm" style="font-size:20px; color:red; padding: 0;">
                                             <span class="bi bi-trash3-fill"></span>&nbsp;
-                                            <!-- Delete Modal -->
-                                            <div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="deleteConfirm" aria-hidden="true">
+                                        </a>
+                                        <!-- Delete Modal -->
+                                            <div class="overlay">
+                                                <div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="deleteConfirm" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -106,7 +120,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
